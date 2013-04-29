@@ -1,0 +1,93 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+		<title>Dictionary</title>
+		<script src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			google.load("jquery", "1.3.2");
+		</script>
+                <script type="text/javascript" src='dojo.js'></script>
+        <script type="text/javascript" src='script.js'></script>
+        <script type="text/javascript" src='jsonParser.js'></script>
+
+		<script type="text/javascript">
+			
+			if(!window.x){
+				x = {};
+			}
+			
+			x.Selector = {};
+			
+			x.Selector.getSelected = function(){
+				var t = '';
+				if(window.getSelection){
+					t = window.getSelection();
+				}else if(document.getSelection){
+					t = document.getSelection();
+				}else if(document.selection){
+					t = document.selection.createRange().text;
+				}
+				return t;
+			}
+			
+			x.Selector.mouseup = function(){
+				var value1 = x.Selector.getSelected();
+				if(value1!=''){
+					dojo.require("dojo.io.script");
+                dojo.ready(function() {
+                  
+                
+                   dojo.io.script.get({
+                        url: "http://www.google.com/dictionary/json?callback=dict_api.callbacks.id100&q=value1&sl=en&tl=en&restrict=pr%2Cde&client=te",
+                                                 callbackParamName: "callback",                                                   content: {
+                            q:value1
+                         },
+                load: function(tweetsJson) { 
+                      var x = JSON.stringify(tweetsJson);
+                          alert(tweetsJson.query+"\n"+"     "+tweetsJson.primaries[0].terms[0].text+"   "+
+                          tweetsJson.primaries[0].entries[1].terms[0].text+"\n"+
+                          tweetsJson.primaries[0].entries[2].terms[0].text);
+                      
+                   
+                          
+                  }
+                   });  
+                });
+
+				}
+			}
+			
+			$(document).ready(function(){
+				$(document).bind("mouseup", x.Selector.mouseup);
+			});
+						
+		</script>
+		<style type="text/css">
+			body { margin: 30px; }
+		</style>
+	</head>
+	<body>
+		<h3>Don't know the meaning of the word, dont worry, just select the respective word and the meaning will pop up on the screen</h3>
+		<p>Well, it must be the creature who lives in the only comfortable room in the place, and has her photograph
+above his fireplace. Upon my word, Watson, there is something very attractive about that livid face at the
+window, and I would not have missed the case for worlds.</p>
+		<p>Thank you. I should like to think over the matter a little now. If the cottage is now permanently deserted we
+may have some difficulty. If, on the other hand, as I fancy is more likely, the inmates were warned of you
+coming, and left before you entered yesterday, then they may be back now, and we should clear it all up
+easily. Let me advise you, then, to return to Norbury, and to examine the windows of the cottage again. If you
+have reason to believe that is inhabited, do not force your way in, but send a wire to my friend and me. We
+shall be with you within an hour of receiving it, and we shall then very soon get to the bottom of the
+business..</p>
+		<p>Shortly after my marriage I had bought a connection in the Paddington district. Old Mr. Farquhar, from whom
+I purchased it, had at one time an excellent general practice; but his age, and an affliction of the nature of St.
+Vitus's dance from which he suffered, had very much thinned it. The public not unnaturally goes on the
+principle that he who would heal others must himself be whole, and looks askance at the curative powers of
+the man whose own case is beyond the reach of his drugs. Thus as my predecessor weakened his practice
+declined, until when I purchased it from him it had sunk from twelve hundred to little more than three hundred
+a year. I had confidence, however, in my own youth and energy, and was convinced that in a very few years
+the concern would be as flourishing as ever.</p>
+</body>
+</html>
